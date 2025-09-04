@@ -4,8 +4,8 @@ from pydantic import BaseSettings, EmailStr
 
 
 class Settings(BaseSettings):
-    app_title: str = 'Название проекта'
-    app_desc: str = 'Описание проекта'
+    app_title: str = 'QRKot'
+    app_desc: str = 'Фонд поддержки котиков'
     database_url: str
     secret: str = 'Secret'
     first_superuser_email: Optional[EmailStr] = None
