@@ -38,9 +38,8 @@ async def get_all_charity_projects(
 async def create_charity_project(
     charity_project: CharityProjectCreate,
     session: AsyncSession = Depends(get_async_session),
-    user: User = Depends(current_superuser),
 ):
-    new_charity_project = await charity_crud.create(charity_project, session, user)
+    new_charity_project = await charity_crud.create(charity_project, session)
     return new_charity_project
 
 
