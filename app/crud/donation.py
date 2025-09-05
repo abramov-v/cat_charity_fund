@@ -20,7 +20,7 @@ class CRUDDonation(CRUDBase):
         donations = await session.execute(
             select(Donation).where(
                 Donation.user_id == user.id
-            )
+            ).order_by(Donation.create_date.desc())
         )
         return donations.scalars().all()
 

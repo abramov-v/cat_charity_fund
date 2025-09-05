@@ -25,7 +25,9 @@ class CRUDBase:
             self,
             session: AsyncSession,
     ):
-        db_objs = await session.execute(select(self.model))
+        db_objs = await session.execute(select(self.model).order_by(
+            self.model.create_date.desc())
+        )
         return db_objs.scalars().all()
     
     async def create(
@@ -36,7 +38,7 @@ class CRUDBase:
     ):
         obj_in_data = obj_in.dict()
         if user:
-            obj_in_data['user.id'] == user.id
+            obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
         await session.commit()
