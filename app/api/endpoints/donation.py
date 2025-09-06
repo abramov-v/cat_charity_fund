@@ -31,7 +31,6 @@ async def get_all_donations(
     '/',
     response_model=DonationUserOut,
     response_model_exclude_none=True,
-    status_code=status.HTTP_201_CREATED,
 )
 async def create_donation(
     obj_in: DonationCreate,

@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.charity_project import charity_crud
@@ -15,7 +15,7 @@ async def check_charity_project_exists(
     charity_project = await charity_crud.get(charity_project_id, session)
     if not charity_project:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail='Такого проекта несуществует'
         )
     return charity_project
@@ -25,50 +25,13 @@ async def check_charity_project_name_duplicate(
         charity_project_name: str,
         session: AsyncSession,
 ) -> None:
-    charity_project_id = await charity_crud.charity_get_by_name(charity_project_name, session)
-    if charity_project_id:
-        raise HTTPException(
-            status_code=422,
-            detail='Проект с таким именем существует.'
-        )
-    
-
-#проверить все ниже
-
-
-# app/api/validators.py
-from fastapi import HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-
-from app.models import CharityProject
-
-
-async def check_charity_project_exists(
-    project_id: int,
-    session: AsyncSession,
-) -> CharityProject:
-    project = await session.get(CharityProject, project_id)
-    if not project:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Проект не найден.",
-        )
-    return project
-
-
-async def check_charity_project_name_duplicate(
-    project_name: str,
-    session: AsyncSession,
-) -> None:
-    query = select(CharityProject).where(CharityProject.name == project_name)
-    result = await session.execute(query)
-    project = result.scalars().first()
-    if project:
+    charity_project = await charity_crud.charity_get_by_name(charity_project_name, session)
+    if charity_project:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Проект с таким именем уже существует.",
+            detail='Проект с таким именем уже существует.'
         )
+
 
 
 async def check_project_not_fully_invested(project: CharityProject) -> None:

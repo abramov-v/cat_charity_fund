@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
 
 
 from app.api.validators import check_charity_project_exists, check_charity_project_name_duplicate
@@ -39,44 +40,45 @@ async def create_charity_project(
     charity_project: CharityProjectCreate,
     session: AsyncSession = Depends(get_async_session),
 ):
+    await check_charity_project_name_duplicate(charity_project.name, session)
     new_charity_project = await charity_crud.create(charity_project, session)
     return new_charity_project
 
 
 @router.delete(
-    '/charity_project/{project_id}',
+    '/{project_id}',
     response_model=CharityProjectDB,
     response_model_exclude_none=True,
     dependencies=[Depends(current_superuser)],
 )
 async def remove_charity_project(
-    charity_project_id: int,
+    project_id: int,
     session: AsyncSession = Depends(get_async_session),
 ):
-    charity_project = await check_charity_project_exists(charity_project_id, session)
+    charity_project = await check_charity_project_exists(project_id, session)
     charity_project = await charity_crud.remove(charity_project, session)
     return charity_project
 
 
 @router.patch(
-    '/charity_project/{project_id}',
+    '/{project_id}',
     response_model=CharityProjectDB,
     response_model_exclude_none=True,
     dependencies=[Depends(current_superuser)],
 )
 async def partially_update_charity_project(
-    charity_project_id: int,
+    project_id: int,
     obj_in: CharityProjectUpdate,
     session: AsyncSession = Depends(get_async_session),
 ):
     charity_project = await check_charity_project_exists(
-        charity_project_id, session
+        project_id, session
     )
 
     if obj_in.name:
         await check_charity_project_name_duplicate(obj_in.name, session)
     
     charity_project = await charity_crud.update(
-        charity_project, session, obj_in
+        charity_project, obj_in, session
     )
     return charity_project
