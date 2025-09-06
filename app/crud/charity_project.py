@@ -7,7 +7,6 @@ from app.crud.base import CRUDBase
 from app.models.charity_project import CharityProject
 
 
-
 class CRUDCharityProject(CRUDBase):
 
     async def charity_get_by_name(

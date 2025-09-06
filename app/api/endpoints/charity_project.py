@@ -1,20 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError
 
-
-from app.api.validators import check_charity_project_exists, check_charity_project_name_duplicate
+from app.api.validators import (check_charity_project_exists,
+                                check_charity_project_name_duplicate)
 from app.core.db import get_async_session
-from app.schemas.charity_project import (
-    CharityProjectCreate,
-    CharityProjectDB,
-    CharityProjectUpdate
-)
-
+from app.core.user import current_superuser, current_user
 from app.crud.charity_project import charity_crud
-from app.core.user import current_user, current_superuser
 from app.models import User
-
+from app.schemas.charity_project import (CharityProjectCreate,
+                                         CharityProjectDB,
+                                         CharityProjectUpdate)
 
 router = APIRouter()
 

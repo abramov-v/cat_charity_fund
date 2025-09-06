@@ -8,7 +8,6 @@ from app.models.donation import Donation
 from app.models.user import User
 
 
-
 class CRUDDonation(CRUDBase):
 
     async def get_user_donations(
