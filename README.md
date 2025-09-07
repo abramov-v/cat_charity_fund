@@ -93,7 +93,6 @@ Swagger UI: `http://127.0.0.1:8000/docs`
 ReDoc: `http://127.0.0.1:8000/redoc`
 
 
-
 ## Примеры запросов к API 
 Подробные варианты запросов и ошибок описаны в [`openapi.yml`](./openapi.yml).  
 Ниже приведены базовые примеры.
@@ -108,7 +107,9 @@ POST /auth/jwt/login
 Content-Type: application/x-www-form-urlencoded
 ```
 
-```username=admin@example.com&password=secret```
+```http
+username=admin@example.com&password=secret
+```
 
 ```json
 {
@@ -145,7 +146,7 @@ GET /charity_project/
   {
     "name": "string",
     "description": "string",
-    "full_amount": 0,
+    "full_amount": 500,
     "id": 0,
     "invested_amount": 0,
     "fully_invested": true,
@@ -154,7 +155,6 @@ GET /charity_project/
   }
 ]
 ```
-
 
 **Создать проект (только суперпользователь):**
 
