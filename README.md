@@ -172,7 +172,7 @@ Content-Type: application/json
   "description": "string",
   "full_amount": 0
 }
-```json
+```
 
 Тело ответа:
 
@@ -191,7 +191,7 @@ Content-Type: application/json
 
 ### Работа с пожертвованиями
 
-** Сделать пожертвование:**
+**Сделать пожертвование:**
 
 ```http
 POST /donation/
@@ -219,6 +219,25 @@ Content-Type: application/json
 }
 ```
 
+**Посмотреть мои пожертвования:**
+
+```http
+GET /donation/my
+Authorization: Bearer <token>
+```
+
+Тело ответа:
+
+```json
+[
+  {
+    "full_amount": 500,
+    "comment": "На корм котикам",
+    "id": 1,
+    "create_date": "2025-09-07T10:05:00Z"
+  }
+]
+```
 
 ## Автор
 **Валерий Абрамов**
