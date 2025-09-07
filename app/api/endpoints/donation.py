@@ -7,7 +7,6 @@ from app.crud.donation import donation_crud
 from app.models import User
 from app.schemas.donation import (DonationAdminOut, DonationCreate,
                                   DonationUserOut)
-from app.services.investing import invest_new_donation
 
 router = APIRouter()
 
@@ -23,8 +22,7 @@ async def get_all_donations(
 ):
     """Получить список всех пожертвований (только для суперпользователей)."""
 
-    donations = await donation_crud.get_multi(session)
-    return donations
+    return await donation_crud.get_multi(session)
 
 
 @router.post(
@@ -40,7 +38,7 @@ async def create_donation(
     """Создать новое пожертвование (для авторизованных пользователей)."""
 
     new_donation = await donation_crud.create(obj_in, session, user)
-    await invest_new_donation(new_donation, session)
+    await donation_crud.invest_new_donation(new_donation, session)
     return new_donation
 
 
@@ -55,5 +53,4 @@ async def get_user_donations(
 ):
     """Получить список пожертвований текущего пользователя."""
 
-    user_donations = await donation_crud.get_user_donations(user, session)
-    return user_donations
+    return await donation_crud.get_user_donations(user, session)

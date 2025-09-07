@@ -12,7 +12,6 @@ from app.crud.charity_project import charity_crud
 from app.schemas.charity_project import (CharityProjectCreate,
                                          CharityProjectDB,
                                          CharityProjectUpdate)
-from app.services.investing import invest_new_project
 
 router = APIRouter()
 
@@ -26,8 +25,7 @@ async def get_all_charity_projects(
 ):
     """Получить список всех проектов."""
 
-    charity_projects = await charity_crud.get_multi(session)
-    return charity_projects
+    return await charity_crud.get_multi(session)
 
 
 @router.post(
@@ -44,7 +42,7 @@ async def create_charity_project(
 
     await check_charity_project_name_duplicate(charity_project.name, session)
     new_charity_project = await charity_crud.create(charity_project, session)
-    await invest_new_project(new_charity_project, session)
+    await charity_crud.invest_new_project(new_charity_project, session)
     return new_charity_project
 
 
@@ -92,5 +90,4 @@ async def partially_update_charity_project(
             obj_in.full_amount, project
         )
 
-    updated = await charity_crud.update(project, obj_in, session)
-    return updated
+    return await charity_crud.update(project, obj_in, session)

@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.constants import MIN_INVESTED_AMOUNT
 from app.crud.charity_project import charity_crud
 from app.models.charity_project import CharityProject
 
@@ -42,7 +43,7 @@ async def check_project_not_fully_invested(project: CharityProject) -> None:
     if project.fully_invested:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Закрытый проект нельзя редактировать или удалять.",
+            detail='Закрытый проект нельзя редактировать или удалять.',
         )
 
 
@@ -55,7 +56,7 @@ async def check_full_amount_not_less_than_invested(
     if new_amount < project.invested_amount:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Нельзя установить требуемую сумму меньше уже вложенной.",
+            detail='Нельзя установить требуемую сумму меньше уже вложенной.',
         )
 
 
@@ -64,7 +65,7 @@ async def check_project_has_no_investments_for_delete(
 ) -> None:
     """Запрет на удаление проекта, если в него уже внесены средства."""
 
-    if project.invested_amount > 0:
+    if project.invested_amount > MIN_INVESTED_AMOUNT:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='В проект уже были внесены средства — удаление запрещено.',
