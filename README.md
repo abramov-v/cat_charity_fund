@@ -107,9 +107,7 @@ POST /auth/jwt/login
 Content-Type: application/x-www-form-urlencoded
 ```
 
-```http
-username=admin@example.com&password=secret
-```
+`username=admin@example.com&password=secret`
 
 ```json
 {
