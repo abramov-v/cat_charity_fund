@@ -1,4 +1,3 @@
-# app/core/user.py
 from typing import Optional, Union
 
 from fastapi import Depends, Request

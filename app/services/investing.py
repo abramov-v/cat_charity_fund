@@ -38,7 +38,10 @@ def _apply_transfer(donation: Donation, project: CharityProject) -> int:
     return take
 
 
-async def invest_new_project(project: CharityProject, session: AsyncSession) -> None:
+async def invest_new_project(
+        project: CharityProject,
+        session: AsyncSession
+) -> None:
     if project.fully_invested:
         await session.refresh(project)
         return
@@ -59,7 +62,10 @@ async def invest_new_project(project: CharityProject, session: AsyncSession) -> 
     await session.refresh(project)
 
 
-async def invest_new_donation(donation: Donation, session: AsyncSession) -> None:
+async def invest_new_donation(
+        donation: Donation,
+        session: AsyncSession
+) -> None:
     if donation.fully_invested:
         await session.refresh(donation)
         return

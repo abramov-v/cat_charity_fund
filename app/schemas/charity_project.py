@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, NonNegativeInt, PositiveInt
 
 
 class CharityProjectBase(BaseModel):
-    """TEST"""
+    """Базовая схема проекта."""
 
     name: Optional[str] = Field(None, min_length=1, max_length=100)
     description: Optional[str] = Field(None, min_length=1)
@@ -16,7 +16,7 @@ class CharityProjectBase(BaseModel):
 
 
 class CharityProjectCreate(CharityProjectBase):
-    """TEST"""
+    """Схема для создания проекта."""
 
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1)
@@ -24,11 +24,11 @@ class CharityProjectCreate(CharityProjectBase):
 
 
 class CharityProjectUpdate(CharityProjectBase):
-    """"TEST"""
+    """Схема для обновления проекта."""
 
 
 class CharityProjectDB(CharityProjectCreate):
-    """TEST"""
+    """Схема проекта для чтения из БД."""
 
     id: int
     invested_amount: NonNegativeInt

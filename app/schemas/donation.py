@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, NonNegativeInt, PositiveInt
+from pydantic import BaseModel, NonNegativeInt, PositiveInt
 
 
 class DonationBase(BaseModel):
-    """TEST"""
+    """Базовая схема пожертвования."""
 
     full_amount: PositiveInt
     comment: Optional[str] = None
@@ -15,11 +15,11 @@ class DonationBase(BaseModel):
 
 
 class DonationCreate(DonationBase):
-    """TEST"""
+    """Схема для создания пожертвования."""
 
 
 class DonationUserOut(DonationBase):
-    """TEST"""
+    """Схема пожертвования для пользователя."""
 
     id: int
     create_date: datetime
@@ -29,7 +29,7 @@ class DonationUserOut(DonationBase):
 
 
 class DonationAdminOut(DonationUserOut):
-    """TEST"""
+    """Схема пожертвования для администратора."""
 
     user_id: int
     invested_amount: NonNegativeInt
@@ -38,6 +38,3 @@ class DonationAdminOut(DonationUserOut):
 
     class Config:
         orm_mode = True
-
-
-

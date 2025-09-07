@@ -1,14 +1,13 @@
-# app/schemas/user.py
 from fastapi_users import schemas
 
 
 class UserRead(schemas.BaseUser[int]):
-    pass
+    """Схема пользователя для чтения."""
 
 
 class UserCreate(schemas.BaseUserCreate):
-    pass
+    """Схема для создания пользователя."""
 
 
 class UserUpdate(schemas.BaseUserUpdate):
-    pass
+    """Схема для обновления пользователя."""
