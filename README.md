@@ -210,8 +210,8 @@ Content-Type: application/json
 
 ```json
 {
-  "full_amount": 0,
-  "comment": "string",
+  "full_amount": 500,
+  "comment": "На корм котикам",
   "id": 0,
   "create_date": "2019-08-24T14:15:22Z"
 }
